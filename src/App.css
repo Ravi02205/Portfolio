@@ -1,3 +1,11 @@
+@import "tailwindcss";
+
+@layer base {
+  body {
+    @apply bg-[#020617] text-slate-300 antialiased;
+  }
+}
+
 .counter {
   font-size: 16px;
   padding: 5px 10px;
