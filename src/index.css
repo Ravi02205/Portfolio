@@ -2,6 +2,14 @@
 @tailwind components;
 @tailwind utilities;
 
+@import "tailwindcss";
+
+@layer base {
+  body {
+    @apply bg-[#020617] text-slate-300 antialiased;
+  }
+}
+
 :root {
   --text: #6b6375;
   --text-h: #08060d;
