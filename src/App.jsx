@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-
 import { MapPin, Mail, Phone, Code, Download, Briefcase, Code2, User, ChevronRight, Menu, X } from "lucide-react";
 
 const GithubIcon = ({ className, size = 24 }) => (
@@ -15,12 +14,12 @@ const LinkedinIcon = ({ className, size = 24 }) => (
 );
 
 const Highlight = ({ children }) => (
-  <strong className="text-cyan-400 font-semibold bg-cyan-400/10 px-1 py-0.5 rounded-md">
+  <strong className="text-cyan-400 font-semibold bg-cyan-400/10 px-1 py-0.5 rounded-md break-words">
     {children}
   </strong>
 );
 
-export default function Portfolio() {
+export default function App() {
   const [activeSection, setActiveSection] = useState('about');
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
@@ -44,14 +43,12 @@ export default function Portfolio() {
         const element = document.getElementById(section);
         if (element) {
           const rect = element.getBoundingClientRect();
-          // Check if the section is in the upper part of the viewport
           if (rect.top <= 150 && rect.bottom >= 150) {
             current = section;
             break;
           }
         }
       }
-      
       if (current) setActiveSection(current);
     };
 
@@ -102,7 +99,7 @@ export default function Portfolio() {
 
           {/* Action / Mobile Toggle */}
           <div className="flex items-center gap-4">
-            <a href="Ravi Resume.pdf" download="Ravi Resume.pdf" className="hidden sm:flex items-center gap-2 px-5 py-2.5 bg-white/5 hover:bg-cyan-500/10 border border-white/10 hover:border-cyan-500/30 rounded-full text-sm font-medium text-white transition-all duration-300 backdrop-blur-sm group">
+            <a href="/Ravi Resume.pdf" download="Ravi Resume.pdf" className="hidden sm:flex items-center gap-2 px-5 py-2.5 bg-white/5 hover:bg-cyan-500/10 border border-white/10 hover:border-cyan-500/30 rounded-full text-sm font-medium text-white transition-all duration-300 backdrop-blur-sm group">
               <Download className="w-4 h-4 text-cyan-400 group-hover:-translate-y-0.5 transition-transform" />
               <span>Download CV</span>
             </a>
@@ -115,30 +112,28 @@ export default function Portfolio() {
           </div>
         </div>
 
-        {/* Mobile Menu */}
-        {isMobileMenuOpen && (
-          <div className="md:hidden bg-[#020617]/95 backdrop-blur-xl border-b border-white/10">
-            <nav className="flex flex-col px-4 pt-2 pb-6 space-y-2">
-              {['About', 'Experience', 'Skills'].map((item) => (
-                <button
-                  key={item}
-                  onClick={() => scrollToSection(item.toLowerCase())}
-                  className="text-left px-4 py-3 rounded-xl hover:bg-white/5 text-sm font-medium text-slate-300 hover:text-cyan-400 transition-colors"
-                >
-                  {item}
-                </button>
-              ))}
-              <a href="Ravi Resume.pdf" download="Ravi Resume.pdf" className="flex items-center justify-center gap-2 w-full mt-4 px-5 py-3 bg-cyan-500/10 border border-cyan-500/20 rounded-xl text-sm font-medium text-cyan-300">
-                <Download className="w-4 h-4" />
-                <span>Download CV</span>
-              </a>
-            </nav>
-          </div>
-        )}
+        {/* Mobile Menu (Fixed Overlay) */}
+        <div className={`md:hidden absolute top-20 left-0 w-full bg-[#020617]/95 backdrop-blur-xl border-b border-white/10 transition-all duration-300 origin-top ${isMobileMenuOpen ? 'scale-y-100 opacity-100' : 'scale-y-0 opacity-0 pointer-events-none'}`}>
+          <nav className="flex flex-col px-6 pt-4 pb-8 space-y-3 shadow-2xl shadow-black">
+            {['About', 'Experience', 'Skills'].map((item) => (
+              <button
+                key={item}
+                onClick={() => scrollToSection(item.toLowerCase())}
+                className="text-left px-4 py-3 rounded-xl hover:bg-white/5 text-base font-medium text-slate-300 hover:text-cyan-400 transition-colors"
+              >
+                {item}
+              </button>
+            ))}
+            <a href="/Ravi Resume.pdf" download="Ravi Resume.pdf" className="flex items-center justify-center gap-2 w-full mt-4 px-5 py-4 bg-cyan-500/10 border border-cyan-500/30 rounded-xl text-base font-medium text-cyan-300 active:bg-cyan-500/20">
+              <Download className="w-5 h-5" />
+              <span>Download CV</span>
+            </a>
+          </nav>
+        </div>
       </header>
 
-      {/* Main Layout */}
-      <main className="relative z-10 max-w-7xl mx-auto flex flex-col lg:flex-row gap-8 px-4 sm:px-6 lg:px-8 pt-32 pb-24 min-h-screen">
+      {/* Main Layout - Added pt-40 for mobile to give the floating avatar room */}
+      <main className="relative z-10 max-w-7xl mx-auto flex flex-col lg:flex-row gap-8 px-4 sm:px-6 lg:px-8 pt-40 lg:pt-32 pb-24 min-h-screen">
         
         {/* Left Sidebar (Developer Trading Card) */}
         <aside className="w-full lg:w-[380px] lg:shrink-0 lg:sticky lg:top-32 h-fit order-1">
@@ -150,9 +145,9 @@ export default function Portfolio() {
             </div>
 
             {/* Profile Content */}
-            <div className="px-8 pb-8 relative">
+            <div className="px-6 sm:px-8 pb-8 relative">
               {/* Avatar */}
-              <div className="w-24 h-24 rounded-2xl bg-gradient-to-tr from-cyan-600 to-blue-900 border-4 border-[#020617] absolute -top-12 left-8 flex items-center justify-center text-3xl font-black text-white shadow-xl shadow-cyan-900/20 group-hover:scale-105 group-hover:-rotate-3 transition-transform duration-500">
+              <div className="w-24 h-24 rounded-2xl bg-gradient-to-tr from-cyan-600 to-blue-900 border-4 border-[#020617] absolute -top-12 left-6 sm:left-8 flex items-center justify-center text-3xl font-black text-white shadow-xl shadow-cyan-900/20 group-hover:scale-105 group-hover:-rotate-3 transition-transform duration-500">
                 RP
               </div>
 
@@ -162,43 +157,43 @@ export default function Portfolio() {
                   Software Developer | <span className="text-cyan-400">5+ Years Experience</span> | Telecom & Gaming
                 </p>
 
-                {/* Contact List */}
-                <div className="mt-8 space-y-4">
+                {/* Contact List (Added shrink-0 and truncate for mobile safety) */}
+                <div className="mt-8 space-y-4 overflow-hidden">
                   <div className="flex items-center gap-3 text-sm text-slate-400 hover:text-white transition-colors">
-                    <div className="w-8 h-8 rounded-full bg-white/5 flex items-center justify-center border border-white/10">
+                    <div className="w-8 h-8 rounded-full bg-white/5 flex items-center justify-center border border-white/10 shrink-0">
                       <MapPin className="w-4 h-4 text-cyan-400" />
                     </div>
-                    <span>Pune, India & Reading, UK</span>
+                    <span className="truncate">Pune, India & Reading, UK</span>
                   </div>
                   <a href="tel:+916351202462" className="flex items-center gap-3 text-sm text-slate-400 hover:text-white transition-colors group/link">
-                    <div className="w-8 h-8 rounded-full bg-white/5 flex items-center justify-center border border-white/10 group-hover/link:border-cyan-500/30 group-hover/link:bg-cyan-500/10 transition-all">
+                    <div className="w-8 h-8 rounded-full bg-white/5 flex items-center justify-center border border-white/10 group-hover/link:border-cyan-500/30 group-hover/link:bg-cyan-500/10 transition-all shrink-0">
                       <Phone className="w-4 h-4 text-cyan-400" />
                     </div>
-                    <span>+91-6351202462</span>
+                    <span className="truncate">+91-6351202462</span>
                   </a>
                   <a href="mailto:pravi7031@gmail.com" className="flex items-center gap-3 text-sm text-slate-400 hover:text-white transition-colors group/link">
-                    <div className="w-8 h-8 rounded-full bg-white/5 flex items-center justify-center border border-white/10 group-hover/link:border-cyan-500/30 group-hover/link:bg-cyan-500/10 transition-all">
+                    <div className="w-8 h-8 rounded-full bg-white/5 flex items-center justify-center border border-white/10 group-hover/link:border-cyan-500/30 group-hover/link:bg-cyan-500/10 transition-all shrink-0">
                       <Mail className="w-4 h-4 text-cyan-400" />
                     </div>
-                    <span>pravi7031@gmail.com</span>
+                    <span className="truncate">pravi7031@gmail.com</span>
                   </a>
                   <a href="https://linkedin.com/in/ravi2205" target="_blank" rel="noreferrer" className="flex items-center gap-3 text-sm text-slate-400 hover:text-white transition-colors group/link">
-                    <div className="w-8 h-8 rounded-full bg-white/5 flex items-center justify-center border border-white/10 group-hover/link:border-cyan-500/30 group-hover/link:bg-cyan-500/10 transition-all">
+                    <div className="w-8 h-8 rounded-full bg-white/5 flex items-center justify-center border border-white/10 group-hover/link:border-cyan-500/30 group-hover/link:bg-cyan-500/10 transition-all shrink-0">
                       <LinkedinIcon className="w-4 h-4 text-cyan-400" />
                     </div>
-                    <span>linkedin.com/in/ravi2205</span>
+                    <span className="truncate">linkedin.com/in/ravi2205</span>
                   </a>
                   <a href="https://github.com/ravi02205" target="_blank" rel="noreferrer" className="flex items-center gap-3 text-sm text-slate-400 hover:text-white transition-colors group/link">
-                    <div className="w-8 h-8 rounded-full bg-white/5 flex items-center justify-center border border-white/10 group-hover/link:border-cyan-500/30 group-hover/link:bg-cyan-500/10 transition-all">
+                    <div className="w-8 h-8 rounded-full bg-white/5 flex items-center justify-center border border-white/10 group-hover/link:border-cyan-500/30 group-hover/link:bg-cyan-500/10 transition-all shrink-0">
                       <GithubIcon className="w-4 h-4 text-cyan-400" />
                     </div>
-                    <span>github.com/Ravi02205</span>
+                    <span className="truncate">github.com/Ravi02205</span>
                   </a>
                   <a href="https://leetcode.com/ravi05" target="_blank" rel="noreferrer" className="flex items-center gap-3 text-sm text-slate-400 hover:text-white transition-colors group/link">
-                    <div className="w-8 h-8 rounded-full bg-white/5 flex items-center justify-center border border-white/10 group-hover/link:border-cyan-500/30 group-hover/link:bg-cyan-500/10 transition-all">
+                    <div className="w-8 h-8 rounded-full bg-white/5 flex items-center justify-center border border-white/10 group-hover/link:border-cyan-500/30 group-hover/link:bg-cyan-500/10 transition-all shrink-0">
                       <Code className="w-4 h-4 text-cyan-400" />
                     </div>
-                    <span>leetcode.com/ravi05</span>
+                    <span className="truncate">leetcode.com/ravi05</span>
                   </a>
                 </div>
               </div>
@@ -207,12 +202,12 @@ export default function Portfolio() {
         </aside>
 
         {/* Right Content Area */}
-        <div className="flex-1 space-y-24 order-2 pb-24">
+        <div className="flex-1 space-y-16 sm:space-y-24 order-2 pb-12 sm:pb-24 overflow-hidden">
           
           {/* About Section */}
           <section id="about" className="scroll-mt-32">
-            <div className="flex items-center gap-3 mb-8">
-              <div className="w-10 h-10 rounded-xl bg-cyan-500/10 border border-cyan-500/20 flex items-center justify-center text-cyan-400">
+            <div className="flex items-center gap-3 mb-6 sm:mb-8">
+              <div className="w-10 h-10 rounded-xl bg-cyan-500/10 border border-cyan-500/20 flex items-center justify-center text-cyan-400 shrink-0">
                 <User className="w-5 h-5" />
               </div>
               <h2 className="text-2xl font-bold text-white tracking-tight">About Me</h2>
@@ -230,25 +225,25 @@ export default function Portfolio() {
 
           {/* Experience Section */}
           <section id="experience" className="scroll-mt-32">
-            <div className="flex items-center gap-3 mb-10">
-              <div className="w-10 h-10 rounded-xl bg-cyan-500/10 border border-cyan-500/20 flex items-center justify-center text-cyan-400">
+            <div className="flex items-center gap-3 mb-8 sm:mb-10">
+              <div className="w-10 h-10 rounded-xl bg-cyan-500/10 border border-cyan-500/20 flex items-center justify-center text-cyan-400 shrink-0">
                 <Briefcase className="w-5 h-5" />
               </div>
               <h2 className="text-2xl font-bold text-white tracking-tight">Experience</h2>
             </div>
 
-            <div className="space-y-8 border-l-2 border-white/5 ml-4">
+            <div className="space-y-8 border-l-2 border-white/5 ml-2 sm:ml-4">
               
               {/* Job 1 */}
-              <div className="relative pl-8 group">
+              <div className="relative pl-6 sm:pl-8 group">
                 <div className="absolute w-4 h-4 bg-[#020617] border-2 border-cyan-500 rounded-full -left-[9px] top-1.5 group-hover:bg-cyan-500 group-hover:shadow-[0_0_12px_rgba(6,182,212,0.6)] transition-all duration-300" />
-                <div className="bg-white/[0.02] border border-white/5 hover:border-white/10 hover:bg-white/[0.04] p-6 rounded-2xl transition-all duration-300">
-                  <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-4">
+                <div className="bg-white/[0.02] border border-white/5 hover:border-white/10 hover:bg-white/[0.04] p-5 sm:p-6 rounded-2xl transition-all duration-300">
+                  <div className="flex flex-col xl:flex-row xl:items-center justify-between gap-2 xl:gap-4 mb-4">
                     <div>
                       <h3 className="text-lg font-bold text-slate-200">Software Developer (Experienced)</h3>
                       <div className="text-cyan-400 font-medium text-sm mt-1">Amdocs | Pune, India & Reading, UK</div>
                     </div>
-                    <span className="text-xs font-semibold px-3 py-1 bg-white/5 border border-white/10 rounded-full text-slate-400 whitespace-nowrap">
+                    <span className="text-xs font-semibold px-3 py-1 bg-white/5 border border-white/10 rounded-full text-slate-400 w-fit">
                       May 2024 - Present
                     </span>
                   </div>
@@ -278,15 +273,15 @@ export default function Portfolio() {
               </div>
 
               {/* Job 2 */}
-              <div className="relative pl-8 group">
+              <div className="relative pl-6 sm:pl-8 group">
                 <div className="absolute w-4 h-4 bg-[#020617] border-2 border-slate-700 rounded-full -left-[9px] top-1.5 group-hover:border-cyan-500 group-hover:bg-cyan-500/20 transition-all duration-300" />
-                <div className="bg-white/[0.02] border border-white/5 hover:border-white/10 hover:bg-white/[0.04] p-6 rounded-2xl transition-all duration-300">
-                  <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-4">
+                <div className="bg-white/[0.02] border border-white/5 hover:border-white/10 hover:bg-white/[0.04] p-5 sm:p-6 rounded-2xl transition-all duration-300">
+                  <div className="flex flex-col xl:flex-row xl:items-center justify-between gap-2 xl:gap-4 mb-4">
                     <div>
                       <h3 className="text-lg font-bold text-slate-200">Software Engineer - Front-end</h3>
                       <div className="text-slate-400 font-medium text-sm mt-1">IVY Comptech - Entain | Hyderabad, India</div>
                     </div>
-                    <span className="text-xs font-semibold px-3 py-1 bg-white/5 border border-white/10 rounded-full text-slate-500 whitespace-nowrap">
+                    <span className="text-xs font-semibold px-3 py-1 bg-white/5 border border-white/10 rounded-full text-slate-500 w-fit">
                       Sep 2021 - May 2024
                     </span>
                   </div>
@@ -316,23 +311,23 @@ export default function Portfolio() {
 
           {/* Skills Section */}
           <section id="skills" className="scroll-mt-32">
-            <div className="flex items-center gap-3 mb-10">
-              <div className="w-10 h-10 rounded-xl bg-cyan-500/10 border border-cyan-500/20 flex items-center justify-center text-cyan-400">
+            <div className="flex items-center gap-3 mb-8 sm:mb-10">
+              <div className="w-10 h-10 rounded-xl bg-cyan-500/10 border border-cyan-500/20 flex items-center justify-center text-cyan-400 shrink-0">
                 <Code2 className="w-5 h-5" />
               </div>
               <h2 className="text-2xl font-bold text-white tracking-tight">Technical Skills</h2>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6">
               
               {/* Core Skills */}
-              <div className="bg-white/[0.02] border border-white/5 rounded-2xl p-6 hover:bg-white/[0.04] transition-all duration-300">
+              <div className="bg-white/[0.02] border border-white/5 rounded-2xl p-5 sm:p-6 hover:bg-white/[0.04] transition-all duration-300">
                 <h3 className="text-white font-semibold mb-4 flex items-center gap-2">
-                  <span className="w-1.5 h-1.5 rounded-full bg-cyan-400" /> Languages & Core
+                  <span className="w-1.5 h-1.5 rounded-full bg-cyan-400 shrink-0" /> Languages & Core
                 </h3>
                 <div className="flex flex-wrap gap-2">
-                  {['JavaScript (ES6+)', 'TypeScript', 'Dart', 'Java', 'Cross-Platform Mobile Dev', 'System Design'].map(skill => (
-                    <span key={skill} className="px-3 py-1.5 bg-white/5 border border-white/10 rounded-lg text-sm text-slate-300 hover:border-cyan-500/50 hover:text-cyan-300 transition-colors">
+                  {['JavaScript (ES6+)', 'TypeScript', 'Dart', 'Java', 'Cross-Platform Mobile', 'System Design'].map(skill => (
+                    <span key={skill} className="px-3 py-1.5 bg-white/5 border border-white/10 rounded-lg text-xs sm:text-sm text-slate-300 hover:border-cyan-500/50 hover:text-cyan-300 transition-colors">
                       {skill}
                     </span>
                   ))}
@@ -340,13 +335,13 @@ export default function Portfolio() {
               </div>
 
               {/* Tech Stack */}
-              <div className="bg-white/[0.02] border border-white/5 rounded-2xl p-6 hover:bg-white/[0.04] transition-all duration-300">
+              <div className="bg-white/[0.02] border border-white/5 rounded-2xl p-5 sm:p-6 hover:bg-white/[0.04] transition-all duration-300">
                 <h3 className="text-white font-semibold mb-4 flex items-center gap-2">
-                  <span className="w-1.5 h-1.5 rounded-full bg-blue-500" /> Frameworks & Libraries
+                  <span className="w-1.5 h-1.5 rounded-full bg-blue-500 shrink-0" /> Frameworks & Libraries
                 </h3>
                 <div className="flex flex-wrap gap-2">
                   {['Flutter', 'React', 'BLOC', 'Redux-Toolkit', 'Node.js', 'Fastify'].map(skill => (
-                    <span key={skill} className="px-3 py-1.5 bg-blue-500/10 border border-blue-500/20 rounded-lg text-sm text-blue-200 hover:border-blue-400/50 hover:bg-blue-500/20 transition-colors">
+                    <span key={skill} className="px-3 py-1.5 bg-blue-500/10 border border-blue-500/20 rounded-lg text-xs sm:text-sm text-blue-200 hover:border-blue-400/50 hover:bg-blue-500/20 transition-colors">
                       {skill}
                     </span>
                   ))}
@@ -354,13 +349,13 @@ export default function Portfolio() {
               </div>
 
               {/* Tools & Patterns */}
-              <div className="bg-white/[0.02] border border-white/5 rounded-2xl p-6 hover:bg-white/[0.04] transition-all duration-300 md:col-span-2">
+              <div className="bg-white/[0.02] border border-white/5 rounded-2xl p-5 sm:p-6 hover:bg-white/[0.04] transition-all duration-300 md:col-span-2">
                 <h3 className="text-white font-semibold mb-4 flex items-center gap-2">
-                  <span className="w-1.5 h-1.5 rounded-full bg-purple-500" /> DB, Cloud & Tools
+                  <span className="w-1.5 h-1.5 rounded-full bg-purple-500 shrink-0" /> DB, Cloud & Tools
                 </h3>
                 <div className="flex flex-wrap gap-2">
                   {['PostgreSQL', 'Redis', 'Git', 'Jenkins', 'Docker', 'Firebase', 'Dynatrace'].map(skill => (
-                    <span key={skill} className="px-3 py-1.5 bg-purple-500/10 border border-purple-500/20 rounded-lg text-sm text-purple-200 hover:border-purple-400/50 hover:bg-purple-500/20 transition-colors">
+                    <span key={skill} className="px-3 py-1.5 bg-purple-500/10 border border-purple-500/20 rounded-lg text-xs sm:text-sm text-purple-200 hover:border-purple-400/50 hover:bg-purple-500/20 transition-colors">
                       {skill}
                     </span>
                   ))}
